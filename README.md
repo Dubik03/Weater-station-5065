@@ -68,7 +68,7 @@ To send data to the weather station, we use a custom protocol that is synchroniz
 ### 2. Sending Data Example
 The program allows the user to input a binary string representing the data to be sent to the weather station. For example:
 
-# 001011011100000011110010111100100111  // Binary string for transmission
+#### 001011011100000011110010111100100111  // Binary string for transmission
 
 
 ---
