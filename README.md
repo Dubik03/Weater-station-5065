@@ -65,9 +65,10 @@ To send data to the weather station, we use a custom protocol that is synchroniz
 - **Repetition**: To ensure reliable reception by the weather station, the data is transmitted multiple times in bursts. This redundancy improves the likelihood of successful communication.
 - **Signal Separator**: A small separator pulse is added between each bit to distinguish one bit from the next.
 
+### 2. Sending Data Example
+The program allows the user to input a binary string representing the data to be sent to the weather station. For example:
 
-
-
+# 001011011100000011110010111100100111  // Binary string for transmission
 
 
 ---
