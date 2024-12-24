@@ -68,8 +68,14 @@ To send data to the weather station, we use a custom protocol that is synchroniz
 ### 2. Sending Data Example
 The program allows the user to input a binary string representing the data to be sent to the weather station. For example:
 
-#### 001011011100000011110010111100100111  // Binary string for transmission
+Binary string for transmission:
+##### 001011011100000011110010111100100111
+This string is then sent multiple times (10 repetitions) to the station.
 
+####Code for Transmitting Data:
+- **Synchronization Signal**: A signal of fixed length marks the beginning of the transmission.
+- **Bit Transmission**: Each bit ('0' or '1') is transmitted based on specific time durations.
+- **Repetition**: The entire block of data is sent multiple times to ensure successful reception.
 
 ---
 
