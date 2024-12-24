@@ -2,7 +2,7 @@
  * This code is licensed under the GNU General Public License v3.0.
  * 
  * Author: Dubik
- * Description: This code is designed to read data from a Meteostation 5065 sensor. It captures timestamps for signal transitions and decodes Sensor ID, temperature, channel and humidity values from the sensor's data stream.
+ * Description: This code is designed to read data from a Meteostation 5065 sensor.(Doesn't work with 5062) It captures timestamps for signal transitions and decodes Sensor ID, temperature, channel and humidity values from the sensor's data stream.
  * 
  * License: This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
  * 
