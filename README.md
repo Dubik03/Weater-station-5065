@@ -1,17 +1,20 @@
-# Arduino RF433MHz Signal Reader
-*For Meteostation 5065 Sensor*
+# Arduino RF433MHz Signal Reader & Transmitter
+*For Weather station 5065*
 
 ---
 
 ## Overview
-This program is designed for Arduino boards to read and decode data signals from a RF433MHz sensor (specifically a Meteostation 5065 sensor). The program captures timestamp data on signal transitions, decodes the sensor’s unique ID, channel, temperature, and humidity values from the transmitted signal, and displays the results via a serial interface.
+This project is designed for Arduino boards to receive data from the Weather station 5065 sensor and transmit data to the weather station using RF433MHz signals. The program allows you to capture weather data transmitted by the sensor (such as channel, temperature, humidity, and sensor ID) and also send custom data back to the station.
+
+The program uses precise timing and signal duration analysis to decode incoming RF signals from the Weather station 5065 sensor and transmit custom data to the weather station.
 
 ---
 
 ## Features
-- **RF Signal Reception**: Captures and decodes signals transmitted by the Meteostation 5065 sensor.
+- **RF Signal Reception**: Captures and decodes signals transmitted by the Weather station 5065 sensor.
 - **Data Parsing**: Extracts and decodes sensor ID, temperature, humidity, and channel information.
 - **Signal Analysis**: Utilizes signal timing and duration for decoding, with tolerance values for various signal components.
+- **Custom Data Transmission**: Transmit binary data (such as channel, sensor ID, temperature, humidity) to the weather station using a custom protocol.
 - **Display Mode**: Toggle raw data output to visually debug signal timings and bit encoding.
 
 ---
@@ -20,10 +23,11 @@ This program is designed for Arduino boards to read and decode data signals from
 The program decodes the signals based on the length and timing of individual bits and separators. The sensor transmits data multiple times in bursts. Here's a detailed explanation of the steps involved:
 
 ### 1. Signal Reception
-The Arduino listens to a digital pin (`SIGNAL_PIN`) for incoming signals. The signal is captured using an interrupt (`dataHandler()`), which logs timestamp data in microseconds.
+The Arduino listens to a digital pin (SIGNAL_PIN) for incoming signals. The signal is captured using an interrupt (dataHandler()), which logs timestamp data in microseconds.
 
 ### 2. Signal Decoding
 The program utilizes timing data to interpret the signals. It looks for specific patterns that mark:
+
 - **Sync Sequence**: A unique pattern that marks the beginning of the transmission.
 - **Separator**: A brief pause indicating the end of one bit and the beginning of the next.
 - **Bit Encoding**: The data is transmitted as a series of high or low signals, where the length of the signal determines whether it's a bit '1' or '0'.
@@ -43,10 +47,28 @@ Tolerances are applied to handle slight variations in signal timings.
 
 ### 4. Data Extraction
 Once a valid signal is captured, the data is decoded:
-- **Sensor ID**: A unique identifier for the sensor.
+- **Sensor ID**: A unique identifier for the sensor.(The ID will change when power is lost... battery replacement...)
 - **Channel**: The communication channel of the sensor.
 - **Temperature**: The sensor's temperature reading, including handling negative temperatures using 2's complement encoding.
 - **Humidity**: The humidity level reported by the sensor.
+
+---
+
+## Sending Data to the Weather Station
+In addition to reading data from the Weather station 5065, this project allows for sending custom data to the weather station. This can be useful for testing, simulating sensor data, or controlling certain parameters.
+
+### 1. Data Transmission Protocol
+To send data to the weather station, we use a custom protocol that is synchronized with the station’s reception mechanism. The transmission involves the following steps:
+
+- **Synchronization Pattern**: A predefined pattern is sent at the start of each data block to signal the beginning of the transmission.
+- **Data Encoding**: The data (such as sensor ID, channel, temperature, and humidity) is encoded into a binary stream. Each bit is transmitted by varying the duration of the signal (a longer pulse for bit '1' and a shorter one for bit '0').
+- **Repetition**: To ensure reliable reception by the weather station, the data is transmitted multiple times in bursts. This redundancy improves the likelihood of successful communication.
+- **Signal Separator**: A small separator pulse is added between each bit to distinguish one bit from the next.
+
+
+
+
+
 
 ---
 
